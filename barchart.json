@@ -1,22 +1,124 @@
 {
-  "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
-  "data": {"url": "data/population.json"},
-  "transform": [
-    {"filter": "datum.year == 2000"},
-    {"calculate": "datum.sex == 2 ? 'Female' : 'Male'", "as": "gender"}
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "description": "Grouped Bar Chart",
+  "width": 300,
+  "height": 240,
+  "padding": 5,
+
+  "data": [
+    {
+      "name": "table",
+      "values": [
+        {"category":"5-14 years", "position":0, "value":6},
+        {"category":"5-14 years", "position":1, "value":15},
+        {"category":"15-24 years", "position":0, "value":271},
+        {"category":"15-24 years", "position":1, "value":96},
+        {"category":"25-34 years", "position":0, "value":404},
+        {"category":"25-34 years", "position":1, "value":119},
+        {"category":"35-54 years", "position":0, "value":866},
+        {"category":"35-54 years", "position":1, "value":277},
+        {"category":"55-74 years", "position":0, "value":471},
+        {"category":"55-74 years", "position":1, "value":157},
+        {"category":"75+ years", "position":0, "value":164},
+        {"category":"75+ years", "position":1, "value":45},
+      ]
+    }
   ],
-  "width": {"step": 12},
-  "mark": "bar",
-  "encoding": {
-    "column": {"field": "age", "type": "ordinal", "spacing": 10},
-    "y": {
-      "aggregate": "sum",
-      "field": "people",
-      "title": "population",
-      "axis": {"grid": false}
+
+  "scales": [
+    {
+      "name": "yscale",
+      "type": "band",
+      "domain": {"data": "table", "field": "category"},
+      "range": "height",
+      "padding": 0.2
     },
-    "x": {"field": "gender", "axis": {"title": ""}},
-    "color": {"field": "gender", "scale": {"range": ["#675193", "#ca8861"]}}
-  },
-  "config": {"view": {"stroke": "transparent"}, "axis": {"domainWidth": 1}}
+    {
+      "name": "xscale",
+      "type": "linear",
+      "domain": {"data": "table", "field": "value"},
+      "range": "width",
+      "round": true,
+      "zero": true,
+      "nice": true
+    },
+    {
+      "name": "color",
+      "type": "ordinal",
+      "domain": {"data": "table", "field": "position"},
+      "range": {"scheme": "category20"}
+    }
+  ],
+
+  "axes": [
+    {"orient": "left", "scale": "yscale", "tickSize": 0, "labelPadding": 4, "zindex": 1},
+    {"orient": "bottom", "scale": "xscale"}
+  ],
+
+  "marks": [
+    {
+      "type": "group",
+
+      "from": {
+        "facet": {
+          "data": "table",
+          "name": "facet",
+          "groupby": "category"
+        }
+      },
+
+      "encode": {
+        "enter": {
+          "y": {"scale": "yscale", "field": "category"}
+        }
+      },
+
+      "signals": [
+        {"name": "height", "update": "bandwidth('yscale')"}
+      ],
+
+      "scales": [
+        {
+          "name": "pos",
+          "type": "band",
+          "range": "height",
+          "domain": {"data": "facet", "field": "position"}
+        }
+      ],
+
+      "marks": [
+        {
+          "name": "bars",
+          "from": {"data": "facet"},
+          "type": "rect",
+          "encode": {
+            "enter": {
+              "y": {"scale": "pos", "field": "position"},
+              "height": {"scale": "pos", "band": 1},
+              "x": {"scale": "xscale", "field": "value"},
+              "x2": {"scale": "xscale", "value": 0},
+              "fill": {"scale": "color", "field": "position"}
+            }
+          }
+        },
+        {
+          "type": "text",
+          "from": {"data": "bars"},
+          "encode": {
+            "enter": {
+              "x": {"field": "x2", "offset": -5},
+              "y": {"field": "y", "offset": {"field": "height", "mult": 0.5}},
+              "fill": [
+                {"test": "contrast('white', datum.fill) > contrast('black', datum.fill)", "value": "white"},
+                {"value": "black"}
+              ],
+              "align": {"value": "right"},
+              "baseline": {"value": "middle"},
+              "text": {"field": "datum.value"}
+            }
+          }
+        }
+      ]
+    }
+  ]
 }
