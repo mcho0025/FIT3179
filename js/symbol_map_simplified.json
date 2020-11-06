@@ -14,7 +14,7 @@
     },
     {
       "data": {
-        "url": "https://raw.github.com/mcho0025/FIT3179/data/master.csv"
+        "url": "https://raw.github.com/mcho0025/FIT3179/data/earthquake.csv"
       },
       "mark": {"type": "circle", "tooltip": {"content": "data"}},
       "encoding": {
