@@ -17,7 +17,10 @@
           "url": "https://mcho0025.github.io/FIT3179/data/data.csv"
         },
         "key": "Country",
-        "fields": ["Suicides"]
+        "field": ["Suicides"]
+        "scale": {
+        "domain": [{"Suicides": 0}, {"Suicides": 40}]
+      }
       }
     },
   ],
