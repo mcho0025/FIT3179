@@ -32,7 +32,7 @@
     "color": {
       "field": "Suicides",
       "type": "quantitative",
-      "scale": {"type": "linear"}
+      "scale": {"type": "log"}
     },
     "tooltip": [
       {"field": "properties.NAME", "type": "nominal", "title": "Country"},
