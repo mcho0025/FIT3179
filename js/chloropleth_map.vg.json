@@ -17,10 +17,7 @@
           "url": "https://mcho0025.github.io/FIT3179/data/data.csv"
         },
         "key": "Country",
-        "field": ["Suicides"]
-        "scale": {
-        "domain": [{"Suicides": 0}, {"Suicides": 40}]
-      }
+        "fields": ["Suicides"]
       }
     },
   ],
@@ -34,7 +31,6 @@
     "color": {
       "field": "Suicides",
       "type": "quantitative",
-      "scale": {"type": "log"}
     },
     "tooltip": [
       {"field": "properties.NAME", "type": "nominal", "title": "Country"},
