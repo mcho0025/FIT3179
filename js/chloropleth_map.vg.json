@@ -30,7 +30,7 @@
     },
   "encoding": {
     "color": {
-      "field": "Suicides",
+      "field": "Crude suicide rates (per 100 000 population)",
       "type": "quantitative",
       "scale": {"type": "log"}
     },
