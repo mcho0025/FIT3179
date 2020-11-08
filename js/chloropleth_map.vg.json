@@ -20,9 +20,10 @@
         "fields": ["Suicides"]
       }
     },
+    {"calculate": "datum.Suicides + 0.1", "as": "Crude suicide rates (per 100 000 population)"}
   ],
   "projection": {
-    "type": "equalEarth"
+    "type": "equirectangular"
   },
   "mark": {
     "type": "geoshape"
