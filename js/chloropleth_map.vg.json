@@ -20,7 +20,7 @@
         "fields": ["Suicides"]
       }
     },
-    {"calculate": "datum.Suicides" + 1, "as": "Suicides"}
+    {"calculate": "datum.Suicides", "as": "Suicides"}
   ],
   "projection": {
     "type": "equirectangular"
